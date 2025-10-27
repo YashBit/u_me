@@ -1,0 +1,5 @@
+// Production Configuration
+APP_NAME = U&Me
+APP_BUNDLE_ID = com.ume.app
+API_BASE_URL = https://api.u-me.app
+LINE_CHANNEL_ID = ${LINE_CHANNEL_ID_PROD}

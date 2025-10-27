@@ -1,0 +1,5 @@
+// Development Configuration
+APP_NAME = U&Me Dev
+APP_BUNDLE_ID = com.ume.app.dev
+API_BASE_URL = https://api-dev.u-me.app
+LINE_CHANNEL_ID = ${LINE_CHANNEL_ID_DEV}
