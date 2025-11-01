@@ -3,7 +3,7 @@ import SwiftUI
 
 class AppCoordinator: ObservableObject {
     @Published var isAuthenticated = false
-    @Published var currentUser: User?
+    @Published var currentUser: User?  // This will now use the real User from Authentication
     
     func navigateToAuthentication() {
         // Handle auth flow
@@ -14,8 +14,8 @@ class AppCoordinator: ObservableObject {
     }
 }
 
-// Temporary User model
-struct User {
-    let id: String
-    let name: String
-}
+// DELETE THESE LINES - Remove the temporary User model
+// struct User {
+//     let id: String
+//     let name: String
+// }

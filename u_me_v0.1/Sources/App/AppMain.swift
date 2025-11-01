@@ -1,19 +1,10 @@
-//
-//  AppMain.swift
-//  U&Me
-//
-//  Application entry point
-//
-
 import SwiftUI
 
 @main
 struct UMeApp: App {
-    
-    // Register AppDelegate for LINE callback handling
+    // THIS LINE IS CRITICAL - Make sure it exists
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    // App state for authentication
     @StateObject private var authViewModel = AuthViewModel.shared
     
     var body: some Scene {
