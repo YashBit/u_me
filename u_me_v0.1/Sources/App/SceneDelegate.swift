@@ -6,12 +6,13 @@
 import UIKit
 import SwiftUI
 import LineSDK
+import GoogleSignIn
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
     
-    // CRITICAL: This handles URL callbacks from LINE
+    // CRITICAL: This handles URL callbacks from LINE and Google
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         print("🔗 SceneDelegate: URL callback received")
         
@@ -25,21 +26,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         print("   📱 Host: \(url.host ?? "none")")
         print("   📱 Path: \(url.path)")
         
-        // Let LINE SDK handle the callback
-        let handled = LoginManager.shared.application(.shared, open: url)
-        print("   ✅ Handled by LINE SDK: \(handled)")
-        
-        if !handled {
-            print("   ⚠️ URL was not handled by LINE SDK")
+        // Try LINE SDK first
+        if LoginManager.shared.application(.shared, open: url) {
+            print("   ✅ Handled by LINE SDK")
+            return
         }
+        
+        // Try Google Sign In
+        if GIDSignIn.sharedInstance.handle(url) {
+            print("   ✅ Handled by Google Sign In")
+            return
+        }
+        
+        print("   ⚠️ URL was not handled by any SDK")
     }
     
-    // Additional scene lifecycle methods (optional but good practice)
+    // Handle URLs passed during app launch
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Handle any URLs that were passed during app launch
         if let urlContext = connectionOptions.urlContexts.first {
             print("🔗 SceneDelegate: URL received during launch")
-            _ = LoginManager.shared.application(.shared, open: urlContext.url)
+            print("   URL: \(urlContext.url.absoluteString)")
+            
+            // Try LINE
+            if LoginManager.shared.application(.shared, open: urlContext.url) {
+                print("   ✅ Handled by LINE SDK")
+                return
+            }
+            
+            // Try Google
+            if GIDSignIn.sharedInstance.handle(urlContext.url) {
+                print("   ✅ Handled by Google Sign In")
+                return
+            }
         }
     }
 }

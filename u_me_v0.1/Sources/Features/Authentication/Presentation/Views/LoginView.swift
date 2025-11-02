@@ -60,23 +60,24 @@ struct LoginView: View {
                 }
                 .disabled(authViewModel.isLoading)
                 
-                // Email Sign In Button
+                // Network Diagnostic Button (TEMPORARY - FOR DEBUGGING)
                 Button {
-                    showEmailLogin = true
+                    Task {
+                        await GoogleAuthService.shared.testNetworkConnectivity()
+                    }
                 } label: {
                     HStack(spacing: 12) {
-                        Image(systemName: "envelope.fill")
+                        Image(systemName: "network")
                             .font(.title3)
-                        Text("Continue with Email")
+                        Text("🔍 Test Google Network")
                             .fontWeight(.semibold)
                     }
                     .frame(maxWidth: .infinity)
                     .frame(height: 56)
-                    .background(Color.blue)
+                    .background(Color.orange)
                     .foregroundColor(.white)
                     .cornerRadius(12)
                 }
-                .disabled(authViewModel.isLoading)
                 
                 // OR Divider
                 HStack(spacing: 16) {
@@ -108,7 +109,7 @@ struct LoginView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .frame(height: 56)
-                    .background(Color(hex: "00B900"))  // ← This still works because Colors.swift has the extension
+                    .background(Color(hex: "00B900"))
                     .foregroundColor(.white)
                     .cornerRadius(12)
                 }
@@ -144,9 +145,6 @@ struct LoginView: View {
                 .padding(.horizontal, 24)
         }
         .padding(.vertical, 24)
-        .sheet(isPresented: $showEmailLogin) {
-            EmailLoginView()
-        }
         .alert("Link Account?", isPresented: $authViewModel.showAccountLinkingDialog) {
             Button("Link Accounts") {
                 authViewModel.linkAccountsTapped()
@@ -159,15 +157,6 @@ struct LoginView: View {
         }
     }
 }
-
-// REMOVE THIS ENTIRE SECTION - IT'S A DUPLICATE!
-/*
-extension Color {
-    init(hex: String) {
-        // ... duplicate code ...
-    }
-}
-*/
 
 #Preview {
     LoginView()

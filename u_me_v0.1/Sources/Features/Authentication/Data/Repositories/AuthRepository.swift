@@ -89,7 +89,6 @@ final class AuthRepository: AuthRepositoryProtocol {
     }
     
     func linkProvider(_ user: User, credentials: AuthCredentials) async throws -> User {
-    //               ↑ ADD UNDERSCORE
         print("🔗 AuthRepository.linkProvider()")
         print("   User ID: \(user.id)")
         print("   Linking provider: \(credentials.provider)")

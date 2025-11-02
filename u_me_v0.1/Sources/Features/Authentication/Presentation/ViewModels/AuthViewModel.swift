@@ -306,7 +306,7 @@ final class AuthViewModel: ObservableObject {
         print("   Error: \(error.localizedDescription)")
         
         if let authError = error as? AuthError,
-           case .userCancelled = authError {
+            case .cancelled = authError {
             print("   → User cancelled, returning to idle state")
             viewState = .idle
         } else {

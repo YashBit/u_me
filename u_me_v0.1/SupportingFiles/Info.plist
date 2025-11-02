@@ -29,13 +29,13 @@
                 <string>line3rdp.yash-bharti.u-me-v0-1</string>
             </array>
         </dict>
-        <!-- Google Sign In URL Scheme - REPLACE WITH YOUR REVERSED CLIENT ID -->
+        <!-- Google Sign In URL Scheme -->
         <dict>
             <key>CFBundleTypeRole</key>
             <string>Editor</string>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>com.googleusercontent.apps.REPLACE-WITH-YOUR-REVERSED-CLIENT-ID</string>
+                <string>com.googleusercontent.apps.817309877029-enl93ds2iesre3imt28mj1v907bclouj</string>
             </array>
         </dict>
     </array>
@@ -61,23 +61,72 @@
     </dict>
     <key>MinimumOSVersion</key>
     <string>15.0</string>
+    
+    <!-- ============================================ -->
+    <!-- UPDATED: App Transport Security             -->
+    <!-- ============================================ -->
     <key>NSAppTransportSecurity</key>
     <dict>
+        <!-- Allow local networking for development -->
+        <key>NSAllowsLocalNetworking</key>
+        <true/>
+        
+        <!-- Disable arbitrary loads by default (security best practice) -->
         <key>NSAllowsArbitraryLoads</key>
         <false/>
+        
+        <!-- Allow media and web content -->
         <key>NSAllowsArbitraryLoadsForMedia</key>
         <true/>
         <key>NSAllowsArbitraryLoadsInWebContent</key>
         <true/>
+        
+        <!-- Domain-specific exceptions -->
         <key>NSExceptionDomains</key>
         <dict>
+            <!-- localhost for Simulator -->
             <key>localhost</key>
             <dict>
-                <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
                 <true/>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+            </dict>
+            
+            <!-- Your Mac's IP for Real Device Testing -->
+            <key>172.22.196.1</key>
+            <dict>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+            </dict>
+            
+            <!-- Google Domains for OAuth -->
+            <key>google.com</key>
+            <dict>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+                <key>NSExceptionRequiresForwardSecrecy</key>
+                <false/>
+            </dict>
+            <key>googleapis.com</key>
+            <dict>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+                <key>NSExceptionRequiresForwardSecrecy</key>
+                <false/>
+            </dict>
+            <key>googleusercontent.com</key>
+            <dict>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+                <key>NSExceptionRequiresForwardSecrecy</key>
+                <false/>
             </dict>
         </dict>
     </dict>
+    
     <key>NSCameraUsageDescription</key>
     <string>U&amp;Me needs camera access to let you capture and share product photos and videos with your community.</string>
     <key>NSPhotoLibraryAddUsageDescription</key>
